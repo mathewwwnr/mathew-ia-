@@ -9,7 +9,7 @@ export const site = {
   name: "Áurea",
   fullName: "Áurea Clínica Dental",
   tagline: "Odontología estética y rehabilitación oral en Machala",
-  url: "https://aurea-dental-demo.vercel.app",
+  url: "https://mathewwwnr.github.io/mathew-ia-",
   whatsapp: "593990000000", // formato internacional sin "+"
   phoneDisplay: "+593 99 000 0000",
   email: "citas@aurea-dental.ec",

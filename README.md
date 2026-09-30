@@ -40,3 +40,8 @@ STATIC_EXPORT=1 NEXT_PUBLIC_NO_EMBED=1 npm run build   # genera /out
 ```
 
 `NEXT_PUBLIC_NO_EMBED=1` reemplaza el mapa embebido de Google por una tarjeta con enlace (para hostings que bloquean iframes).
+
+## GitHub Pages
+
+El workflow `.github/workflows/pages.yml` compila y publica el sitio en cada push.
+Requisito único: en GitHub → Settings → Pages → Source, elegir **GitHub Actions**.
