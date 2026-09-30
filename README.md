@@ -32,3 +32,11 @@ Todo el contenido está en **`lib/site.ts`**:
 3. Sustituye `stats`, `team` y `testimonials` (hoy son datos de ejemplo).
 4. Revisa los textos de cada tratamiento con el odontólogo responsable.
 5. Fotos: sustituye `PortraitPlaceholder` (equipo) y `SmileArt` (antes/después) en `components/art.tsx` por imágenes reales con `next/image`, colocándolas en `public/`. Las fotos de pacientes requieren su autorización.
+
+## Exportación estática
+
+```bash
+STATIC_EXPORT=1 NEXT_PUBLIC_NO_EMBED=1 npm run build   # genera /out
+```
+
+`NEXT_PUBLIC_NO_EMBED=1` reemplaza el mapa embebido de Google por una tarjeta con enlace (para hostings que bloquean iframes).

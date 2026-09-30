@@ -92,15 +92,39 @@ export function Location() {
           </Reveal>
         </div>
         <Reveal>
-          <div className="relative overflow-hidden rounded-[2rem] border border-gold/20">
-            <iframe
-              title={`Mapa de ${site.fullName}`}
-              src={`https://www.google.com/maps?q=${q}&output=embed`}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="h-[26rem] w-full grayscale-[0.85] sepia-[0.25] md:h-[32rem]"
-            />
-          </div>
+          {process.env.NEXT_PUBLIC_NO_EMBED ? (
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${q}`}
+              target="_blank"
+              rel="noreferrer"
+              className="group relative flex h-[22rem] items-end overflow-hidden rounded-[2rem] border border-gold/20 bg-gradient-to-br from-cream via-sand to-gold-light/60 p-8 md:h-[26rem] md:p-12"
+            >
+              <svg viewBox="0 0 800 400" className="absolute inset-0 h-full w-full text-gold/30" preserveAspectRatio="xMidYMid slice" aria-hidden>
+                {Array.from({ length: 14 }).map((_, i) => (
+                  <path key={i} d={`M-20 ${40 + i * 28} C 200 ${10 + i * 30}, 500 ${80 + i * 24}, 820 ${30 + i * 29}`} fill="none" stroke="currentColor" strokeWidth="1" />
+                ))}
+              </svg>
+              <span className="absolute left-1/2 top-[42%] flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-ink text-gold-light shadow-2xl transition-transform duration-700 group-hover:-translate-y-[60%]">
+                <MapPin className="h-6 w-6" />
+              </span>
+              <span className="relative">
+                <span className="block font-serif text-3xl">{site.address.street}</span>
+                <span className="mt-1 block text-sm text-stone">
+                  {site.address.city}, {site.address.region} · Ver en Google Maps →
+                </span>
+              </span>
+            </a>
+          ) : (
+            <div className="relative overflow-hidden rounded-[2rem] border border-gold/20">
+              <iframe
+                title={`Mapa de ${site.fullName}`}
+                src={`https://www.google.com/maps?q=${q}&output=embed`}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="h-[26rem] w-full grayscale-[0.85] sepia-[0.25] md:h-[32rem]"
+              />
+            </div>
+          )}
         </Reveal>
       </div>
     </section>

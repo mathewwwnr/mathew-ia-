@@ -13,7 +13,7 @@ type Fields = { name: string; phone: string; service: string; date: string; slot
 export default function BookingForm({ defaultService = "" }: { defaultService?: string }) {
   const [f, setF] = useState<Fields>({ name: "", phone: "", service: defaultService, date: "", slot: "Mañana", notes: "" });
   const [errors, setErrors] = useState<Partial<Record<keyof Fields, string>>>({});
-  const [sent, setSent] = useState(false);
+  const [sent, setSent] = useState<string | null>(null);
   const today = new Date().toISOString().split("T")[0];
 
   const set = (k: keyof Fields) => (e: { target: { value: string } }) => setF((prev) => ({ ...prev, [k]: e.target.value }));
@@ -39,8 +39,9 @@ export default function BookingForm({ defaultService = "" }: { defaultService?: 
       .filter(Boolean)
       .join("\n");
 
-    window.open(whatsappLink(msg), "_blank", "noopener,noreferrer");
-    setSent(true);
+    const link = whatsappLink(msg);
+    window.open(link, "_blank", "noopener,noreferrer");
+    setSent(link);
   };
 
   return (
@@ -65,9 +66,18 @@ export default function BookingForm({ defaultService = "" }: { defaultService?: 
             </motion.span>
             <p className="mt-6 font-serif text-3xl">Solicitud lista</p>
             <p className="mt-3 max-w-sm text-sm text-stone">
-              Abrimos WhatsApp con tus datos. Envía el mensaje y te confirmamos el horario disponible.
+              Tu mensaje está listo en WhatsApp. Envíalo y te confirmamos el horario disponible.
             </p>
-            <button onClick={() => setSent(false)} className="mt-8 text-sm text-gold-deep underline underline-offset-4">
+            <a
+              href={sent}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#1f8f55] px-7 py-4 text-sm font-medium text-white"
+            >
+              <WhatsAppIcon className="h-5 w-5" />
+              Abrir WhatsApp
+            </a>
+            <button onClick={() => setSent(null)} className="mt-8 text-sm text-gold-deep underline underline-offset-4">
               Editar solicitud
             </button>
           </motion.div>
