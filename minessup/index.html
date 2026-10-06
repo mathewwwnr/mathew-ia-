@@ -328,6 +328,8 @@ h1,h2,h3,h4{font-family:Sora,Inter,sans-serif;color:var(--white);line-height:1.1
 .chips input:checked + span{background:rgba(43,182,234,.2);border-color:var(--cyan-400);color:var(--white)}
 .chips input:focus-visible + span{outline:2px solid var(--cyan-300);outline-offset:2px}
 .form .btn{margin-top:24px}
+.form-err{margin-top:14px;font-size:14px;color:#ff9db0;text-align:center}
+[hidden]{display:none!important}
 .form .legal{font-size:12.5px;color:var(--muted);margin-top:14px;text-align:center}
 .form-ok{display:none;text-align:center;padding:40px 10px}
 .form-ok svg{width:56px;height:56px;color:var(--cyan-300);margin:0 auto 18px}
@@ -740,12 +742,14 @@ footer{border-top:1px solid var(--line);padding:56px 0 34px;margin-top:40px}
           Enviar y agendar diagnóstico
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </button>
+        <p class="form-err" id="f-err" role="alert" hidden>No pudimos enviar el formulario. Intenta de nuevo o escríbenos por WhatsApp.</p>
         <p class="legal">Usamos tus datos solo para responder a tu solicitud.</p>
       </form>
       <div class="form-ok" role="status" aria-live="polite">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>
-        <h3>Recibimos tu solicitud</h3>
-        <p>Te escribiremos pronto. Si prefieres, elige ya la fecha de tu llamada.</p>
+        <h3 id="ok-title">Recibimos tu solicitud</h3>
+        <p id="ok-text">Te escribiremos pronto. Si prefieres, elige ya la fecha de tu llamada.</p>
+        <a id="ok-wa" class="btn btn-primary" target="_blank" rel="noopener" hidden>Enviar mis datos por WhatsApp</a>
         <a id="ok-calendar" class="btn btn-primary" target="_blank" rel="noopener">Elegir fecha y hora</a>
       </div>
     </div>
@@ -998,12 +1002,16 @@ const CONFIG = {
         if (!r.ok) throw new Error(r.status);
       } catch (err) {
         btn.disabled = false; btn.style.opacity = 1;
-        alert("No pudimos enviar el formulario. Intenta de nuevo o escríbenos por WhatsApp.");
+        $("#f-err").hidden = false;
         return;
       }
     } else if (CONFIG.whatsapp) {
       const msg = `Hola Minessup, quiero agendar un diagnóstico.\n\nNombre: ${data.nombre}\nEmpresa: ${data.empresa}\nCorreo: ${data.correo}\nWhatsApp: ${data.whatsapp}\nPaís: ${data.pais || "-"}\nTamaño: ${data.tamano || "-"}\nInterés: ${data.servicio || "-"}\nProceso a mejorar: ${data.mensaje || "-"}`;
-      window.open(waLink(msg), "_blank", "noopener");
+      // Último paso: el cliente envía sus datos por WhatsApp con un toque
+      const okWa = $("#ok-wa"); okWa.href = waLink(msg); okWa.hidden = false;
+      $("#ok-calendar").hidden = true;
+      $("#ok-title").textContent = "Falta un paso";
+      $("#ok-text").textContent = "Último paso: toca el botón para enviarnos tus datos por WhatsApp y coordinar la llamada.";
     }
     box.classList.add("sent");
     box.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" });
