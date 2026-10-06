@@ -264,21 +264,22 @@ h1,h2,h3,h4{font-family:Sora,Inter,sans-serif;color:var(--white);line-height:1.1
 @media (max-width:960px){.quotes{grid-template-columns:1fr}}
 
 /* Planes */
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
-.plan{border-radius:26px;border:1px solid var(--line);padding:34px;background:rgba(255,255,255,.02);display:flex;flex-direction:column}
+.plans{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;align-items:stretch}
+.plan{border-radius:26px;border:1px solid var(--line);padding:30px 26px;background:rgba(255,255,255,.02);display:flex;flex-direction:column}
 .plan.hl{background:linear-gradient(180deg,rgba(43,182,234,.16),rgba(12,44,112,.35));border-color:rgba(76,196,242,.5);position:relative;box-shadow:0 30px 80px -30px rgba(10,162,217,.5)}
-.plan .badge{position:absolute;top:-13px;left:34px;background:var(--grad);color:var(--navy-950);font-family:Sora;font-weight:700;font-size:12px;padding:5px 12px;border-radius:999px}
-.plan h3{font-size:22px}
-.plan .for{color:var(--muted);font-size:14px;margin-top:6px;min-height:44px}
+.plan .badge{position:absolute;top:-13px;left:26px;background:var(--grad);color:var(--navy-950);font-family:Sora;font-weight:700;font-size:12px;padding:5px 12px;border-radius:999px}
+.plan h3{font-size:20px;white-space:nowrap}
+.plan .for{color:var(--muted);font-size:14px;margin-top:6px;min-height:66px}
 .plan .price{font-family:Sora;font-size:42px;font-weight:700;color:var(--white);margin:22px 0 2px;line-height:1.1}
-.plan .price small{font-size:15px;font-weight:500;color:var(--muted)}
-.plan .note{font-size:13px;color:var(--muted)}
+.plan .price small{display:block;font-size:14px;font-weight:500;color:var(--cyan-200);margin-top:6px}
+.plan .note{font-size:13px;color:var(--muted);margin-top:8px;min-height:40px}
 .plan ul{list-style:none;display:grid;gap:12px;margin:26px 0 30px;font-size:15px}
 .plan li{display:flex;gap:10px}
 .plan li svg{width:18px;height:18px;color:var(--cyan-300);flex:none;margin-top:3px}
 .plan .btn{margin-top:auto}
 .plans-foot{text-align:center;color:var(--muted);font-size:14px;margin-top:28px}
-@media (max-width:960px){.plans{grid-template-columns:1fr}}
+@media (max-width:1100px){.plans{grid-template-columns:repeat(2,1fr);row-gap:30px}}
+@media (max-width:700px){.plans{grid-template-columns:1fr}}
 
 /* FAQ */
 .faq{max-width:860px;margin:0 auto;display:grid;gap:12px}
@@ -610,10 +611,10 @@ footer{border-top:1px solid var(--line);padding:56px 0 34px;margin-top:40px}
     <div class="section-head center reveal">
       <span class="eyebrow">Planes</span>
       <h2>Planes y precios</h2>
-      <p>El precio final se confirma después del diagnóstico, según integraciones y volumen.</p>
+      <p>Precios en dólares (USD). Pagos únicos, salvo el Sistema IA Completo, que incluye una mensualidad.</p>
     </div>
     <div class="plans" id="plans"></div>
-    <p class="plans-foot reveal">¿Necesitas algo a medida? <a href="#contacto" class="grad-text" style="font-weight:600">Cuéntanos tu caso</a>.</p>
+    <p class="plans-foot reveal">Los planes con agente no incluyen las tarifas de Meta por mensajes de WhatsApp ni el consumo de IA, que dependen del volumen de cada negocio.<br>¿Necesitas algo a medida? <a href="#contacto" class="grad-text" style="font-weight:600">Cuéntanos tu caso</a>.</p>
   </div>
 </section>
 
@@ -795,7 +796,7 @@ const CONFIG = {
   whatsapp: "593990153486",           // Solo números con código de país, sin el 0 inicial
   whatsappMensaje: "Hola Minessup, quiero agendar una llamada de diagnóstico.",
   calendario: "",                     // Enlace de la página de reservas (Google Calendar → Agenda de citas). Vacío = abre WhatsApp
-  correo: "",
+  correo: "mathewnr23@gmail.com",
   instagram: "https://www.instagram.com/minessup.ia/",
   linkedin: "https://www.linkedin.com/in/mathew-noblecilla-95b5532b9/",
   // Destino del formulario. Si lo dejas vacío, el formulario abre WhatsApp con los datos.
@@ -817,12 +818,22 @@ const CONFIG = {
   testimonios: [],                    // Agrega aquí testimonios reales: { texto, nombre, cargo }. Vacío = la sección no se muestra
 
   planes: [
-    { nombre: "[Nombre del plan 1]", para: "[Para quién es este plan]", precio: "[$0]", periodo: "[pago único]", nota: "[Nota opcional]",
-      incluye: ["[Qué incluye 1]", "[Qué incluye 2]", "[Qué incluye 3]", "[Qué incluye 4]"] },
-    { nombre: "[Nombre del plan 2]", para: "[Para quién es este plan]", precio: "[$0]", periodo: "[/ mes]", nota: "[Nota opcional]", destacado: true,
-      incluye: ["[Qué incluye 1]", "[Qué incluye 2]", "[Qué incluye 3]", "[Qué incluye 4]", "[Qué incluye 5]"] },
-    { nombre: "[Nombre del plan 3]", para: "[Para quién es este plan]", precio: "[$0]", periodo: "[/ mes]", nota: "[Nota opcional]",
-      incluye: ["[Qué incluye 1]", "[Qué incluye 2]", "[Qué incluye 3]", "[Qué incluye 4]"] }
+    { nombre: "Página Web", para: "Para negocios que necesitan una web profesional que reciba contactos.", precio: "$350", periodo: "pago único",
+      nota: "Dominio y hosting incluidos el primer año",
+      incluye: ["Diseño a medida de hasta 5 secciones", "Adaptada a celular y computadora", "Dominio .com y hosting por 1 año",
+                "Botón de WhatsApp y formulario de contacto", "SEO básico y Google Analytics"] },
+    { nombre: "Agente de Citas IA", para: "Para negocios que reciben citas o reservas por WhatsApp.", precio: "$500", periodo: "pago único",
+      nota: "Implementación y configuración",
+      incluye: ["Agente en WhatsApp que responde 24/7", "Agenda citas directo en Google Calendar", "Recordatorio automático antes de cada cita",
+                "Entrenado con tus servicios, precios y horarios", "Deriva a una persona cuando hace falta"] },
+    { nombre: "Web + Agente IA", para: "Para empresas que quieren captar clientes y agendarlos sin intervención.", precio: "$650", periodo: "pago único",
+      nota: "Ahorras $200 frente a contratarlos por separado", destacado: true,
+      incluye: ["Todo lo del plan Página Web", "Todo lo del plan Agente de Citas IA", "Agente conectado al formulario de la web",
+                "Cada lead registrado en una hoja de cálculo", "Capacitación a tu equipo"] },
+    { nombre: "Sistema IA Completo", para: "Para empresas que quieren automatizar ventas, atención y operación.", precio: "$1.500", periodo: "+ mensualidad a convenir",
+      nota: "La mensualidad depende del alcance y se acuerda en la llamada",
+      incluye: ["Todo lo del plan Web + Agente IA", "Agentes en WhatsApp, Instagram y la web", "Integración con tu CRM",
+                "Automatización de procesos internos (cotizaciones, reportes, seguimiento)", "Soporte, ajustes y mejoras cada mes"] }
   ]
 };
 </script>
@@ -887,7 +898,7 @@ const CONFIG = {
   // Planes
   $("#plans").innerHTML = CONFIG.planes.map((p, i) => `
     <article class="plan reveal ${p.destacado ? "hl" : ""}" data-d="${i + 1}">
-      ${p.destacado ? '<span class="badge">Más elegido</span>' : ""}
+      ${p.destacado ? '<span class="badge">Recomendado</span>' : ""}
       <h3>${t(p.nombre)}</h3>
       <p class="for">${t(p.para)}</p>
       <div class="price">${t(p.precio)} <small>${t(p.periodo)}</small></div>
