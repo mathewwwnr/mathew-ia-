@@ -13,7 +13,7 @@ Todo se edita en el bloque `CONFIG` al final de `index.html`:
 | Campo | Qué poner |
 |---|---|
 | `whatsapp` | Número solo con dígitos y código de país (ej. `51987654321`). Activa el botón flotante. |
-| `calendario` | Enlace de Calendly o Cal.com para agendar la llamada. |
+| `calendario` | Enlace de la página de reservas de Google Calendar (Agenda de citas) o Calendly. Vacío = el botón de agenda abre WhatsApp. No uses el enlace `?cid=` del calendario: ese sirve para suscribirse al calendario, no para reservar. |
 | `correo`, `instagram`, `linkedin` | Datos de contacto del pie de página. |
 | `formularioEndpoint` | URL que recibe los leads en JSON (Formspree, webhook de n8n o Make). Si queda vacío, el formulario abre WhatsApp con los datos. |
 | `casos`, `testimonios`, `planes` | Datos reales. Todo texto entre `[corchetes]` se muestra con borde punteado amarillo hasta que lo reemplaces. |

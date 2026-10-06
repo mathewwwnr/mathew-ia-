@@ -375,7 +375,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 34px;margin-top:40px}
     <nav class="nav-links" aria-label="Principal">
       <a href="#servicios">Servicios</a>
       <a href="#proceso">Proceso</a>
-      <a href="#casos">Casos</a>
+      <a href="#casos">Proyectos</a>
       <a href="#planes">Planes</a>
       <a href="#faq">Preguntas</a>
     </nav>
@@ -385,7 +385,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 34px;margin-top:40px}
   <div class="mobile-menu" id="mobile-menu">
     <a href="#servicios">Servicios</a>
     <a href="#proceso">Proceso</a>
-    <a href="#casos">Casos</a>
+    <a href="#casos">Proyectos</a>
     <a href="#planes">Planes</a>
     <a href="#faq">Preguntas</a>
     <a href="#contacto" class="btn btn-primary">Agendar llamada</a>
@@ -585,9 +585,9 @@ footer{border-top:1px solid var(--line);padding:56px 0 34px;margin-top:40px}
 <section class="section" id="casos">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">Casos</span>
-      <h2>Resultados con clientes</h2>
-      <p>Proyectos implementados y lo que cambió en cada empresa.</p>
+      <span class="eyebrow">Proyectos</span>
+      <h2>Lo que construimos por sector</h2>
+      <p>Sistemas que diseñamos para distintos tipos de empresa. Te mostramos cualquiera funcionando en la llamada de diagnóstico.</p>
     </div>
     <div class="cases" id="cases"></div>
   </div>
@@ -792,12 +792,12 @@ footer{border-top:1px solid var(--line);padding:56px 0 34px;margin-top:40px}
    amarillo para que sepas que falta completarlo.
    ===================================================================== */
 const CONFIG = {
-  whatsapp: "",                       // Solo números con código de país. Ej.: "51987654321"
+  whatsapp: "593990153486",           // Solo números con código de país, sin el 0 inicial
   whatsappMensaje: "Hola Minessup, quiero agendar una llamada de diagnóstico.",
-  calendario: "",                     // Enlace de Calendly o Cal.com. Ej.: "https://calendly.com/minessup/diagnostico"
-  correo: "[correo@minessup.com]",
-  instagram: "",                      // Ej.: "https://instagram.com/minessup"
-  linkedin: "",                       // Ej.: "https://linkedin.com/company/minessup"
+  calendario: "",                     // Enlace de la página de reservas (Google Calendar → Agenda de citas). Vacío = abre WhatsApp
+  correo: "",
+  instagram: "https://www.instagram.com/minessup.ia/",
+  linkedin: "https://www.linkedin.com/in/mathew-noblecilla-95b5532b9/",
   // Destino del formulario. Si lo dejas vacío, el formulario abre WhatsApp con los datos.
   // Puedes usar Formspree (https://formspree.io), un webhook de n8n o Make, etc.
   formularioEndpoint: "",
@@ -806,19 +806,15 @@ const CONFIG = {
                  "HubSpot", "Google Workspace", "Microsoft 365", "Airtable", "Webflow"],
 
   casos: [
-    { sector: "[Sector]", titulo: "[Qué se implementó]", kpi: "[0%]", kpiLabel: "[Qué métrica cambió]",
-      detalle: "[Problema que tenía la empresa y qué solución se entregó, en 2 líneas.]", cliente: "[Nombre de la empresa · País]" },
-    { sector: "[Sector]", titulo: "[Qué se implementó]", kpi: "[0 h]", kpiLabel: "[Qué métrica cambió]",
-      detalle: "[Problema que tenía la empresa y qué solución se entregó, en 2 líneas.]", cliente: "[Nombre de la empresa · País]" },
-    { sector: "[Sector]", titulo: "[Qué se implementó]", kpi: "[0x]", kpiLabel: "[Qué métrica cambió]",
-      detalle: "[Problema que tenía la empresa y qué solución se entregó, en 2 líneas.]", cliente: "[Nombre de la empresa · País]" }
+    { sector: "Salud · Clínica dental", titulo: "Sitio web con reservas por WhatsApp", kpi: "6", kpiLabel: "páginas de tratamiento con SEO local",
+      detalle: "Web completa para una clínica en Machala: formulario de reserva que envía la cita por WhatsApp, botón flotante y datos estructurados para Google.", cliente: "Proyecto demostrativo · Machala, Ecuador" },
+    { sector: "Comercio · Distribución", titulo: "Agente de ventas en WhatsApp", kpi: "24/7", kpiLabel: "atención sin intervención humana",
+      detalle: "El agente responde consultas de stock, pide los datos del cliente, envía la cotización por correo y agenda la llamada con un vendedor.", cliente: "Proyecto demostrativo" },
+    { sector: "Servicios · Bienes raíces", titulo: "Captura y seguimiento de leads", kpi: "< 1 min", kpiLabel: "del formulario al primer mensaje",
+      detalle: "Cada lead de anuncios entra al CRM, recibe un saludo por WhatsApp y, si no responde en 48 horas, un mensaje de seguimiento automático.", cliente: "Proyecto demostrativo" }
   ],
 
-  testimonios: [
-    { texto: "[Frase textual del cliente, con su permiso.]", nombre: "[Nombre Apellido]", cargo: "[Cargo · Empresa]" },
-    { texto: "[Frase textual del cliente, con su permiso.]", nombre: "[Nombre Apellido]", cargo: "[Cargo · Empresa]" },
-    { texto: "[Frase textual del cliente, con su permiso.]", nombre: "[Nombre Apellido]", cargo: "[Cargo · Empresa]" }
-  ],
+  testimonios: [],                    // Agrega aquí testimonios reales: { texto, nombre, cargo }. Vacío = la sección no se muestra
 
   planes: [
     { nombre: "[Nombre del plan 1]", para: "[Para quién es este plan]", precio: "[$0]", periodo: "[pago único]", nota: "[Nota opcional]",
@@ -849,6 +845,11 @@ const CONFIG = {
   ["#cta-wa", "#wa-float"].forEach(s => { const a = $(s); a.href = waLink(); if (!CONFIG.whatsapp) a.removeAttribute("target"); });
   ["#cta-calendar", "#ok-calendar"].forEach(s => { const a = $(s); a.href = calLink; if (!CONFIG.calendario && !CONFIG.whatsapp) a.removeAttribute("target"); });
   if (!CONFIG.whatsapp) $("#wa-float").style.display = "none";
+  if (!CONFIG.calendario && CONFIG.whatsapp) {
+    // Sin página de reservas: el botón de agenda abre WhatsApp y lo dice
+    $("#cta-wa").remove();
+    ["#cta-calendar", "#ok-calendar"].forEach(s => $(s).lastChild.textContent = " Agendar por WhatsApp");
+  }
 
   const fc = [];
   if (CONFIG.correo) fc.push(`<li><a href="mailto:${esc(CONFIG.correo.replace(/[\[\]]/g, ""))}">${t(CONFIG.correo)}</a></li>`);
@@ -873,9 +874,10 @@ const CONFIG = {
       <div class="client">${t(c.cliente)}</div>
     </article>`).join("");
 
-  // Testimonios
+  // Testimonios (la sección se oculta si no hay ninguno)
+  if (!CONFIG.testimonios.length) $("#testimonios").remove();
   const initials = n => pending(n) ? "··" : n.split(/\s+/).map(w => w[0]).slice(0, 2).join("").toUpperCase();
-  $("#quotes").innerHTML = CONFIG.testimonios.map((q, i) => `
+  if (CONFIG.testimonios.length) $("#quotes").innerHTML = CONFIG.testimonios.map((q, i) => `
     <figure class="quote reveal" data-d="${i + 1}">
       <svg class="q" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.2 6C4.4 7.3 3 9.6 3 12.8V18h6v-6H6c0-2 .9-3.4 2.6-4.3L7.2 6zm10 0C14.4 7.3 13 9.6 13 12.8V18h6v-6h-3c0-2 .9-3.4 2.6-4.3L17.2 6z"/></svg>
       <blockquote>${t(q.texto)}</blockquote>
