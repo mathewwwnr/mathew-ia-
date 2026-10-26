@@ -1,0 +1,87 @@
+# Jarvis — asesor de ventas de MinessUP.IA (configuración local; gana sobre harvey.yaml)
+persona:
+  name: "Jarvis"
+  company: "MinessUP.IA"
+  role: "Asesor de ventas"
+  email: ""                       # PENDIENTE: buzón de envío en un dominio secundario
+  linkedin: "linkedin.com/in/mathew-noblecilla-95b5532b9"
+  tone: "profesional, consultivo, cercano y directo"
+
+product:
+  name: "Agente de Citas IA"
+  description: "MinessUP.IA instala un agente de inteligencia artificial en WhatsApp que responde a los pacientes las 24 horas, resuelve preguntas frecuentes, agenda citas directo en Google Calendar y envía recordatorios. Está pensado para clínicas y consultorios en Ecuador que reciben citas por WhatsApp o por teléfono."
+  pricing: "Agente de Citas IA: $500 pago único. Web + Agente IA: $650. Sistema IA completo: desde $1.500 + mensualidad."
+  key_benefits:
+    - "Responde mensajes de WhatsApp las 24 horas, también fuera del horario de atención"
+    - "Agenda citas directo en Google Calendar y envía recordatorios automáticos antes de cada cita"
+    - "Entrenado con los servicios, precios y horarios de la clínica; deriva a una persona cuando hace falta"
+  objection_responses:
+    "too expensive": "Es un pago único de $500, sin mensualidad. Si el agente agenda dos o tres pacientes que hoy se pierden fuera de horario, se paga solo."
+    "already have a solution": "Tiene sentido. ¿Su recepción responde también por la noche y los fines de semana, o esos mensajes esperan hasta el día siguiente?"
+    "not interested": "Entendido, no le escribo más. Si en algún momento quiere ver cómo funciona, me avisa."
+  offer:
+    primary: "Agente de Citas IA en WhatsApp, $500 pago único"
+    entry: "Llamada de diagnóstico gratuita de 15 minutos"
+    goal: "book_call"
+    booking_method: "ask_preference"
+    booking_url: ""
+    meeting_duration: "15 minutos"
+    meeting_owner: "Mathew Noblecilla"
+
+icp:
+  industries:
+    - "dentist"
+  company_size: "1-30 empleados"
+  titles:
+    - "Dueño"
+    - "Odontólogo director"
+    - "Gerente general"
+    - "Administrador"
+  geography:
+    - "Guayaquil, Ecuador"
+    - "Quito, Ecuador"
+    - "Cuenca, Ecuador"
+    - "Machala, Ecuador"
+  geo_coordinates:
+    "Guayaquil, Ecuador": "-2.1894,-79.8891,15"
+    "Quito, Ecuador": "-0.1807,-78.4678,15"
+    "Cuenca, Ecuador": "-2.9001,-79.0059,10"
+    "Machala, Ecuador": "-3.2581,-79.9554,10"
+  hiring_signals:
+    - "recepcionista"
+    - "asistente dental"
+
+channels:
+  email:
+    enabled: true
+    provider: "gmail"
+    max_daily_sends: 30
+    require_approval: true        # nada se envía sin tu aprobación en el Outbox
+    link_domains: []
+    send_to_risky: false
+    max_bounce_rate: 0.05
+    warmup:
+      start_date: ""
+      min_days: 14
+      start_sends: 5
+      daily_increase: 3
+    send_window:
+      start: "08:00"
+      end: "17:00"
+      weekdays_only: true
+      recipient_timezone: true
+  linkedin:
+    enabled: false
+
+usage:
+  max_daily_claude_percent: 60
+  heartbeat_interval_minutes: 15
+  quiet_hours:
+    start: "21:00"
+    end: "07:00"
+    timezone: "America/Guayaquil"
+
+compliance:
+  postal_address: ""              # PENDIENTE: dirección física de MinessUP.IA
+  opt_out_line: 'Si no le interesa, responda "no gracias" y no le vuelvo a escribir.'
+  do_not_contact: []
