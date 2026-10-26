@@ -1,0 +1,376 @@
+<!-- Escena 4 (13.1–22.2 s): restaurante con cuatro agentes de IA.
+     Voz: "Agentes de inteligencia artificial responden, resuelven dudas, gestionan reservas y automatizan tareas." -->
+<template>
+  <style>
+    @font-face {
+      font-family: "Sora";
+      src: url("assets/fonts/Sora-latin.woff2") format("woff2");
+      font-weight: 400 800;
+    }
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+      color: #c6ddff;
+    }
+    #s4-stage {
+      position: absolute;
+      inset: 110px 0 0 0;
+    }
+    #s4-eyebrow {
+      position: absolute;
+      top: 186px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-family: "Sora", sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: #9ad6f5;
+    }
+    #s4-head {
+      position: absolute;
+      top: 240px;
+      left: 40px;
+      right: 40px;
+      text-align: center;
+      font-family: "Sora", sans-serif;
+      font-weight: 800;
+      font-size: 78px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: #f4f8ff;
+    }
+    .s4-hw {
+      display: inline-block;
+      position: relative;
+    }
+    .s4-hw .s4-dim {
+      color: rgba(198, 221, 255, 0.2);
+    }
+    .s4-hw .s4-lit {
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: linear-gradient(135deg, #9ad6f5 0%, #2bb6ea 38%, #0a7fd0 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      white-space: nowrap;
+    }
+    .s4-card {
+      position: absolute;
+      left: 60px;
+      width: 960px;
+      height: 200px;
+      border-radius: 30px;
+      overflow: hidden;
+    }
+    .s4-skel,
+    .s4-on {
+      position: absolute;
+      inset: 0;
+      border-radius: 30px;
+    }
+    .s4-skel {
+      background: rgba(12, 44, 112, 0.28);
+      border: 2px solid rgba(154, 214, 245, 0.14);
+    }
+    .s4-sheen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 260px;
+      height: 200px;
+      background: linear-gradient(90deg, transparent, rgba(154, 214, 245, 0.16), transparent);
+    }
+    .s4-on {
+      background: linear-gradient(160deg, rgba(12, 44, 112, 0.9), rgba(0, 18, 64, 0.95));
+      border: 2px solid rgba(76, 196, 242, 0.6);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+    .s4-glow {
+      position: absolute;
+      left: 60px;
+      width: 960px;
+      height: 200px;
+      border-radius: 30px;
+      box-shadow: 0 0 60px rgba(43, 182, 234, 0.35);
+    }
+    .s4-ico {
+      position: absolute;
+      left: 28px;
+      top: 28px;
+      width: 96px;
+      height: 96px;
+      border-radius: 26px;
+      background: linear-gradient(135deg, #9ad6f5, #2bb6ea 45%, #0a7fd0);
+      display: grid;
+      place-items: center;
+      color: #000a2e;
+    }
+    .s4-ico svg {
+      width: 52px;
+      height: 52px;
+    }
+    .s4-num {
+      position: absolute;
+      left: 28px;
+      top: 136px;
+      width: 96px;
+      text-align: center;
+      font-family: "Sora", sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: 0.1em;
+      color: #9ad6f5;
+    }
+    .s4-name {
+      position: absolute;
+      left: 152px;
+      top: 26px;
+      font-family: "Sora", sans-serif;
+      font-weight: 700;
+      font-size: 36px;
+      color: #f4f8ff;
+    }
+    .s4-role {
+      position: absolute;
+      left: 152px;
+      top: 74px;
+      font-size: 28px;
+      font-weight: 500;
+      color: #9ad6f5;
+    }
+    .s4-live {
+      position: absolute;
+      right: 28px;
+      top: 32px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #9ad6f5;
+    }
+    .s4-live i {
+      display: block;
+      width: 14px;
+      height: 14px;
+      border-radius: 7px;
+      background: #4cc4f2;
+      box-shadow: 0 0 12px #4cc4f2;
+    }
+    .s4-demo {
+      position: absolute;
+      left: 152px;
+      right: 28px;
+      top: 122px;
+      height: 56px;
+      display: flex;
+      gap: 14px;
+    }
+    .s4-stack {
+      display: grid;
+    }
+    .s4-stack > * {
+      grid-area: 1 / 1;
+    }
+    .s4-chip {
+      height: 56px;
+      border-radius: 28px;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 28px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .s4-in {
+      background: rgba(198, 221, 255, 0.12);
+      border: 1.5px solid rgba(198, 221, 255, 0.22);
+      color: #c6ddff;
+    }
+    .s4-out {
+      background: linear-gradient(135deg, #9ad6f5, #2bb6ea 50%, #0a7fd0);
+      color: #000a2e;
+      font-weight: 700;
+    }
+    .s4-dots {
+      background: rgba(43, 182, 234, 0.18);
+      border: 1.5px solid rgba(76, 196, 242, 0.4);
+      gap: 8px;
+    }
+    .s4-dots b {
+      display: block;
+      width: 11px;
+      height: 11px;
+      border-radius: 6px;
+      background: #9ad6f5;
+    }
+    .s4-spin {
+      width: 26px;
+      height: 26px;
+      border-radius: 13px;
+      border: 4px solid rgba(154, 214, 245, 0.25);
+      border-top-color: #4cc4f2;
+    }
+  </style>
+
+  <div id="root" data-composition-id="s4" data-width="1080" data-height="1920">
+    <div id="s4-stage">
+      <div id="s4-eyebrow">RESTAURANTE CON AGENTES DE IA</div>
+      <div id="s4-head">
+        <span class="s4-hw" id="s4-hw1"><span class="s4-dim" data-layout-ignore>Responde.</span><span class="s4-lit">Responde.</span></span>
+        <span class="s4-hw" id="s4-hw2"><span class="s4-dim" data-layout-ignore>Resuelve.</span><span class="s4-lit">Resuelve.</span></span><br />
+        <span class="s4-hw" id="s4-hw3"><span class="s4-dim" data-layout-ignore>Reserva.</span><span class="s4-lit">Reserva.</span></span>
+        <span class="s4-hw" id="s4-hw4"><span class="s4-dim" data-layout-ignore>Automatiza.</span><span class="s4-lit">Automatiza.</span></span>
+      </div>
+
+      <!-- Agente 1: atención al cliente -->
+      <div class="s4-glow" id="s4-g1" style="top: 470px"></div>
+      <div class="s4-card" id="s4-c1" style="top: 470px">
+        <div class="s4-skel"><div class="s4-sheen"></div></div>
+        <div class="s4-on">
+          <div class="s4-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8 11h.01M12 11h.01M16 11h.01"/></svg></div>
+          <div class="s4-num" data-layout-ignore>01</div>
+          <div class="s4-name">Atención al cliente</div>
+          <div class="s4-role">Responde mensajes</div>
+          <div class="s4-live" data-layout-ignore><i></i>ACTIVO</div>
+          <div class="s4-demo">
+            <div class="s4-chip s4-in" id="s4-c1a">¿Tienen mesa para 4?</div>
+            <div class="s4-stack" data-layout-allow-overlap>
+              <div class="s4-chip s4-dots" id="s4-c1d" style="width: 110px; justify-content: center"><b></b><b></b><b></b></div>
+              <div class="s4-chip s4-out" id="s4-c1b">¡Claro! ¿Para qué hora?</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agente 2: información -->
+      <div class="s4-glow" id="s4-g2" style="top: 690px"></div>
+      <div class="s4-card" id="s4-c2" style="top: 690px">
+        <div class="s4-skel"><div class="s4-sheen"></div></div>
+        <div class="s4-on">
+          <div class="s4-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>
+          <div class="s4-num" data-layout-ignore>02</div>
+          <div class="s4-name">Información</div>
+          <div class="s4-role">Resuelve preguntas frecuentes</div>
+          <div class="s4-live" data-layout-ignore><i></i>ACTIVO</div>
+          <div class="s4-demo">
+            <div class="s4-chip s4-in" id="s4-c2a">¿Horario?</div>
+            <div class="s4-chip s4-out" id="s4-c2b">12:00 – 23:00</div>
+            <div class="s4-chip s4-out" id="s4-c2c">Menú enviado ✓</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agente 3: reservas (confirma solo después de verificar disponibilidad) -->
+      <div class="s4-glow" id="s4-g3" style="top: 910px"></div>
+      <div class="s4-card" id="s4-c3" style="top: 910px">
+        <div class="s4-skel"><div class="s4-sheen"></div></div>
+        <div class="s4-on">
+          <div class="s4-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 16 2 2 4-4"/></svg></div>
+          <div class="s4-num" data-layout-ignore>03</div>
+          <div class="s4-name">Reservas</div>
+          <div class="s4-role">Confirma solo con disponibilidad verificada</div>
+          <div class="s4-live" data-layout-ignore><i></i>ACTIVO</div>
+          <div class="s4-demo">
+            <div class="s4-chip s4-in" id="s4-c3a">4 personas · 20:00</div>
+            <div class="s4-stack" data-layout-allow-overlap>
+              <div class="s4-chip s4-dots" id="s4-c3v" style="color: #c6ddff"><div class="s4-spin" id="s4-spin"></div>Verificando mesa…</div>
+              <div class="s4-chip s4-in" id="s4-c3ok">Mesa disponible ✓</div>
+              <div class="s4-chip s4-out" id="s4-c3c">Reserva confirmada ✓</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agente 4: coordinación operativa -->
+      <div class="s4-glow" id="s4-g4" style="top: 1130px"></div>
+      <div class="s4-card" id="s4-c4" style="top: 1130px">
+        <div class="s4-skel"><div class="s4-sheen"></div></div>
+        <div class="s4-on">
+          <div class="s4-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+          <div class="s4-num" data-layout-ignore>04</div>
+          <div class="s4-name">Coordinación operativa</div>
+          <div class="s4-role">Organiza tareas y apoya al equipo</div>
+          <div class="s4-live" data-layout-ignore><i></i>ACTIVO</div>
+          <div class="s4-demo">
+            <div class="s4-chip s4-out" id="s4-c4a">Pedido a cocina ✓</div>
+            <div class="s4-chip s4-out" id="s4-c4b">Turnos ✓</div>
+            <div class="s4-chip s4-out" id="s4-c4c">Recordatorios ✓</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+
+      // Entrada: viene del zoom a través del núcleo de IA
+      tl.fromTo("#s4-stage", { scale: 1.12, filter: "blur(12px)", opacity: 0 }, { scale: 1, filter: "blur(0px)", opacity: 1, duration: 0.5, ease: "expo.out" }, 0);
+      tl.fromTo("#s4-eyebrow", { opacity: 0, y: -16 }, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out" }, 0.15);
+      tl.fromTo(".s4-hw .s4-dim", { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.06, ease: "power2.out" }, 0.25);
+
+      // Las cuatro tarjetas aparecen como "ranuras" vacías y se iluminan al nombrarlas
+      const cards = ["#s4-c1", "#s4-c2", "#s4-c3", "#s4-c4"];
+      const glows = ["#s4-g1", "#s4-g2", "#s4-g3", "#s4-g4"];
+      const words = ["#s4-hw1", "#s4-hw2", "#s4-hw3", "#s4-hw4"];
+      const on = [2.45, 3.3, 4.6, 6.1]; // "responden", "resuelven dudas", "gestionan reservas", "automatizan tareas"
+
+      cards.forEach(function (c, i) {
+        tl.fromTo(c, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "expo.out" }, 0.3 + i * 0.09);
+        tl.set(c + " .s4-on", { opacity: 0 }, 0);
+        tl.set(glows[i], { opacity: 0 }, 0);
+        tl.set(words[i] + " .s4-lit", { opacity: 0 }, 0);
+        // brillo de "cargando" que recorre cada ranura una vez
+        tl.fromTo(c + " .s4-sheen", { x: -280 }, { x: 980, duration: 1.1, ease: "power1.inOut" }, 0.9 + i * 0.2);
+        // activación
+        tl.to(c + " .s4-on", { opacity: 1, duration: 0.25, ease: "power2.out" }, on[i]);
+        tl.fromTo(c, { scale: 0.97 }, { scale: 1, duration: 0.45, ease: "back.out(1.8)", immediateRender: false }, on[i]);
+        tl.to(glows[i], { opacity: 1, duration: 0.3, ease: "power2.out" }, on[i]);
+        tl.to(glows[i], { opacity: 0.35, duration: 0.8, ease: "power2.out" }, on[i] + 0.4);
+        tl.fromTo(words[i] + " .s4-lit", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power4.out" }, on[i]);
+        tl.fromTo(c + " .s4-live", { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.3, ease: "expo.out" }, on[i] + 0.15);
+      });
+
+      // Demo 1: pregunta → escribiendo → respuesta
+      tl.fromTo("#s4-c1a", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.25, ease: "expo.out" }, 2.75);
+      tl.fromTo("#s4-c1d", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.2, ease: "back.out(2)" }, 3.0);
+      tl.fromTo("#s4-c1d b", { y: 0 }, { y: -8, duration: 0.15, stagger: 0.07, yoyo: true, repeat: 1, ease: "sine.inOut" }, 3.05);
+      tl.to("#s4-c1d", { opacity: 0, duration: 0.12 }, 3.4);
+      tl.fromTo("#s4-c1b", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.8)" }, 3.42);
+
+      // Demo 2: horario y menú
+      tl.fromTo("#s4-c2a", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.25, ease: "expo.out" }, 3.5);
+      tl.fromTo("#s4-c2b", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.8)" }, 3.85);
+      tl.fromTo("#s4-c2c", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.8)" }, 4.2);
+
+      // Demo 3: solicitud → verificando → disponible → confirmada (nunca confirma antes de verificar)
+      tl.fromTo("#s4-c3a", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.25, ease: "expo.out" }, 4.8);
+      tl.fromTo("#s4-c3v", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.25, ease: "expo.out" }, 5.05);
+      tl.fromTo("#s4-spin", { rotation: 0 }, { rotation: 540, duration: 0.72, ease: "none" }, 5.05);
+      tl.to("#s4-c3v", { opacity: 0, duration: 0.12 }, 5.75);
+      tl.fromTo("#s4-c3ok", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.22, ease: "back.out(1.8)" }, 5.77);
+      tl.to("#s4-c3ok", { opacity: 0, duration: 0.12 }, 6.45);
+      tl.fromTo("#s4-c3c", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.8)" }, 6.5);
+
+      // Demo 4: tareas que se resuelven
+      tl.fromTo("#s4-c4a", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.8)" }, 6.45);
+      tl.fromTo("#s4-c4b", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.8)" }, 6.85);
+      tl.fromTo("#s4-c4c", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.8)" }, 7.25);
+
+      // Salida: barrido hacia arriba
+      tl.to("#s4-stage", { y: -140, opacity: 0, filter: "blur(10px)", duration: 0.26, ease: "power3.in" }, 8.84);
+
+      window.__timelines["s4"] = tl;
+    })();
+  </script>
+</template>

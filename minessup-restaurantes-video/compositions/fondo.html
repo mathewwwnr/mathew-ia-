@@ -1,0 +1,40 @@
+<!-- Fondo de marca Minessup (igual que la landing): azul marino, brillo cian y retícula -->
+<template>
+  <style>
+      /* Fondo de marca (igual que la landing de Minessup): azul marino + brillo cian + retícula */
+      #root {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+                background:
+          radial-gradient(1100px 900px at 85% -5%, rgba(10, 162, 217, 0.2), transparent 60%),
+          radial-gradient(900px 900px at -10% 40%, rgba(12, 44, 112, 0.6), transparent 60%),
+          linear-gradient(180deg, #001240, #000a2e 62%);
+      }
+      #bg-grid {
+        position: absolute;
+        left: 0;
+        top: -128px;
+        width: 1080px;
+        height: 2176px;
+        background-image:
+          linear-gradient(rgba(154, 214, 245, 0.14) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(154, 214, 245, 0.14) 1px, transparent 1px);
+        background-size: 64px 64px;
+        opacity: 0.4;
+        -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000 10%, transparent 72%);
+        mask-image: radial-gradient(ellipse at 50% 30%, #000 10%, transparent 72%);
+      }
+  </style>
+  <div id="root" data-composition-id="bg" data-width="1080" data-height="1920">
+    <div id="bg-grid"></div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      // La retícula avanza lento y constante durante toda la pieza
+      tl.fromTo("#bg-grid", { y: 0 }, { y: 64, duration: 31.6, ease: "none" }, 0);
+      window.__timelines["bg"] = tl;
+    })();
+  </script>
+</template>

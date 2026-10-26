@@ -1,0 +1,152 @@
+<!-- Escena 5b (27–32 s): cierre de marca con el logo original.
+     Voz: "Automatiza con Minessup I A." -->
+<template>
+  <style>
+    @font-face {
+      font-family: "Sora";
+      src: url("assets/fonts/Sora-latin.woff2") format("woff2");
+      font-weight: 400 800;
+    }
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+      color: #c6ddff;
+    }
+    #s6-stage {
+      position: absolute;
+      inset: 60px 0 0 0;
+    }
+    #s6-halo {
+      position: absolute;
+      left: 140px;
+      top: 230px;
+      width: 800px;
+      height: 800px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(43, 182, 234, 0.35) 0%, rgba(10, 127, 208, 0.12) 40%, transparent 68%);
+    }
+    .s6-ring {
+      position: absolute;
+      left: 330px;
+      top: 420px;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      border: 3px solid rgba(154, 214, 245, 0.6);
+    }
+    #s6-logo {
+      position: absolute;
+      left: 340px;
+      top: 430px;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(154, 214, 245, 0.35);
+    }
+    #s6-l1 {
+      position: absolute;
+      left: 40px;
+      right: 40px;
+      top: 905px;
+      text-align: center;
+      font-family: "Sora", sans-serif;
+      font-weight: 700;
+      font-size: 58px;
+      color: #f4f8ff;
+      letter-spacing: -0.01em;
+    }
+    #s6-brand {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      top: 985px;
+      text-align: center;
+      font-family: "Sora", sans-serif;
+      font-weight: 800;
+      font-size: 128px;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: #f4f8ff;
+    }
+    .s6-w,
+    .s6-ch {
+      display: inline-block;
+    }
+    .s6-grad {
+      background: linear-gradient(135deg, #9ad6f5 0%, #2bb6ea 38%, #0a7fd0 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    #s6-pill {
+      position: absolute;
+      left: 90px;
+      top: 1200px;
+      width: 900px;
+      height: 112px;
+      border-radius: 56px;
+      background: linear-gradient(135deg, #9ad6f5 0%, #2bb6ea 38%, #0a7fd0 100%);
+      box-shadow: 0 16px 50px -8px rgba(43, 182, 234, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      font-family: "Sora", sans-serif;
+      font-weight: 700;
+      font-size: 34px;
+      color: #000a2e;
+      white-space: nowrap;
+    }
+    #s6-pill svg {
+      width: 40px;
+      height: 40px;
+      flex: none;
+    }
+  </style>
+
+  <div id="root" data-composition-id="s6" data-width="1080" data-height="1920">
+    <div id="s6-stage">
+      <div id="s6-halo"></div>
+      <div class="s6-ring" id="s6-ring1"></div>
+      <div class="s6-ring" id="s6-ring2"></div>
+      <img id="s6-logo" src="assets/brand/minessup-logo.png" alt="Logo MinessUP" />
+
+      <div id="s6-l1">
+        <span class="s6-w">Automatiza</span> <span class="s6-w">tu</span> <span class="s6-w">negocio</span> <span class="s6-w">con</span>
+      </div>
+      <div id="s6-brand">
+        <span class="s6-ch">M</span><span class="s6-ch">i</span><span class="s6-ch">n</span><span class="s6-ch">e</span><span class="s6-ch">s</span><span class="s6-ch">s</span><span class="s6-ch">U</span><span class="s6-ch">P</span><span class="s6-ch s6-grad">.</span><span class="s6-ch s6-grad">I</span><span class="s6-ch s6-grad">A</span>
+      </div>
+
+      <div id="s6-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>
+        Escríbenos y descubre qué puedes automatizar.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+
+      // Logo original: llega con el golpe grave (≈0.37 s) y un halo cian
+      tl.fromTo("#s6-halo", { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.9, ease: "expo.out" }, 0.25);
+      tl.fromTo("#s6-logo", { scale: 0.55, opacity: 0, filter: "blur(16px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.6, ease: "expo.out" }, 0.22);
+      tl.fromTo("#s6-ring1", { scale: 0.95, opacity: 0.9 }, { scale: 1.9, opacity: 0, duration: 1.1, ease: "power2.out" }, 0.35);
+      tl.fromTo("#s6-ring2", { scale: 0.95, opacity: 0.7 }, { scale: 1.45, opacity: 0, duration: 1.0, ease: "power2.out" }, 0.55);
+
+      // "Automatiza tu negocio con" (voz "Automatiza con" 0.36–1.6)
+      tl.fromTo("#s6-l1 .s6-w", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, stagger: 0.2, ease: "power4.out" }, 0.45);
+
+      // "MinessUP.IA" letra por letra (voz "Minessup" 2.02)
+      tl.fromTo("#s6-brand .s6-ch", { opacity: 0.0, y: 30, filter: "blur(6px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.3, stagger: 0.045, ease: "expo.out" }, 1.95);
+
+      // Llamado a la acción
+      tl.fromTo("#s6-pill", { opacity: 0, y: 40, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "back.out(1.5)" }, 2.1);
+
+      window.__timelines["s6"] = tl;
+    })();
+  </script>
+</template>
